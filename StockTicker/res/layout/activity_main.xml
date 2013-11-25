@@ -49,15 +49,18 @@
 
         <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/button2"
+            android:id="@+id/buttonSavedStocks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Button 2" />
+            android:text="@string/savedStocks" />
+        
+        <Button
+            style="?android:attr/buttonBarButtonStyle"
+            android:id="@+id/buttonShow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-     /> 
+
 </LinearLayout>

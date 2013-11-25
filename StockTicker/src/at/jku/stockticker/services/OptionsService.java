@@ -23,7 +23,7 @@ public class OptionsService extends AbstractArrayService<Stock> {
 		}
 		reader.endArray();
 
-		return null;
+		return stocks;
 	}
 
 	private Stock readStock() throws IOException {

@@ -1,5 +1,6 @@
 package at.jku.stockticker;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -8,31 +9,39 @@ import java.util.List;
 import java.util.Locale;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnMultiChoiceClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
+import at.jku.stockticker.pojo.Stock;
 
 public class MainActivity extends Activity {
 
 	private EditText fromDateText;
 	private EditText toDateText;
 	private Button stocksBtn;
+	private Button savedStocksBtn;
+	private Button showBtn;
 	
 	private SimpleDateFormat sdf;
 	
 	private Date fromDate;
 	private Date toDate;
-	private List<String> selectedStocks;
-	private String[] availableStocks;
+	
+	private List<Stock> selectedStocks;
+	private List<Stock> portfolio;
+	
+	private List<Stock> availableStocks;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +51,18 @@ public class MainActivity extends Activity {
 		this.fromDateText = (EditText) findViewById(R.id.dateFrom);
 		this.toDateText = (EditText) findViewById(R.id.dateTo);
 		this.stocksBtn = (Button) findViewById(R.id.buttonStocks);
+		this.savedStocksBtn = (Button) findViewById(R.id.buttonSavedStocks);
+		this.showBtn = (Button) findViewById(R.id.buttonShow);
 		
-		this.sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);		
-		this.selectedStocks = new ArrayList<String>();
+		this.sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);	
+		this.fromDate = Calendar.getInstance().getTime();
+		this.toDate = Calendar.getInstance().getTime();
+		this.fromDateText.setText(sdf.format(this.fromDate));
+		this.toDateText.setText(sdf.format(this.toDate));
+		
 		this.availableStocks = this.getStocks();
+		this.portfolio = this.getSavedStocks();
+		this.selectedStocks = new ArrayList<Stock>(this.portfolio);
 
 		this.fromDateText.setOnClickListener(new OnClickListener() {
 			@Override
@@ -85,8 +102,14 @@ public class MainActivity extends Activity {
 								cal.set(Calendar.MONTH, monthOfYear);
 								cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-								toDateText.setText(sdf.format(cal.getTime()));
-								toDate = cal.getTime();
+								if(cal.getTime().before(fromDate)) {
+									Toast.makeText(MainActivity.this, 
+											R.string.err_date_to, 
+											Toast.LENGTH_LONG).show();
+								} else {
+									toDateText.setText(sdf.format(cal.getTime()));
+									toDate = cal.getTime();
+								}
 							}
 						},
 						cal.get(Calendar.YEAR), 
@@ -95,40 +118,75 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		this.stocksBtn.setOnClickListener(new OnClickListener() {
+				
+		this.stocksBtn.setOnClickListener(new StockSelectAlert(
+				availableStocks,
+				selectedStocks, this, new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int which, long id) {
+				CheckedTextView checkedTextView = (CheckedTextView) view;
+				if(checkedTextView.isChecked())
+					selectedStocks.add(availableStocks.get(which));
+				else
+					selectedStocks.remove(availableStocks.get(which));
+			}
+		}));
+		
+		this.savedStocksBtn.setOnClickListener(new StockSelectAlert(
+				availableStocks,
+				portfolio, this, new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int which, long id) {
+				CheckedTextView checkedTextView = (CheckedTextView) view;
+				if(checkedTextView.isChecked())
+					portfolio.add(availableStocks.get(which));
+				else
+					portfolio.remove(availableStocks.get(which));
+			}
+		}));
+		
+		this.showBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				AlertDialog.Builder selectMulti = new AlertDialog.Builder(MainActivity.this);
-				selectMulti.setIcon(R.drawable.ic_launcher);
-				selectMulti.setNegativeButton(R.string.cancel, null);
-				selectMulti.setPositiveButton(R.string.ok, null);
+				if(selectedStocks.isEmpty()) {
+					Toast.makeText(MainActivity.this, R.string.err_no_stocks, Toast.LENGTH_LONG).show();
+					return;
+				}
 				
-				selectMulti.setMultiChoiceItems(
-						availableStocks, 
-						null, 
-						new OnMultiChoiceClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-						String stock = MainActivity.this.availableStocks[which];
-						if(isChecked)
-							MainActivity.this.selectedStocks.add(stock);
-						else
-							MainActivity.this.selectedStocks.remove(stock);
-					}
-				});
-				selectMulti.show();
+				Intent intent = new SalesGrowthChart().execute(MainActivity.this);
+				startActivity(intent);
 			}
 		});
+	}
+
+	private List<Stock> getSavedStocks() {
+		List<Stock> stocks = new ArrayList<Stock>();
+		stocks.add(new Stock(1, "test1"));
+		stocks.add(new Stock(4, "test4"));
+		return stocks;
 	}
 
 	/**
 	 * Torben: Hier die Aktien zurückgeben.
 	 * 
 	 * @return
+	 * @throws IOException 
 	 */
-	private String[] getStocks() {		
-		return getResources().getStringArray(R.array.test_array);
+	private List<Stock> getStocks() {		
+//		try {
+			//return new OptionsService().getData();
+			List<Stock> stocks = new ArrayList<Stock>();
+			stocks.add(new Stock(1, "test1"));
+			stocks.add(new Stock(2, "test2"));
+			stocks.add(new Stock(3, "test3"));
+			stocks.add(new Stock(4, "test4"));
+			return stocks;
+//		} catch (IOException e) {
+//			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+//			return null;
+//		}
 	}
 	
 	private void getStockPrices() {
