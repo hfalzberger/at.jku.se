@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">StockTicker</string>
+    <string name="action_settings">Settings</string>
+    <string name="show">Anzeigen</string>
+    <string name="from">Von</string>
+    <string name="to">Bis</string>
+    <string name="stocks">Aktien</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Abbrechen</string>
+    
+    
+    <string-array name="test_array">
+        <item>Shuttle Badminton</item>
+        <item>Tennis</item>
+        <item>Table Tennis</item>
+        <item>Basket Ball</item>
+        <item>Foot Ball</item>
+        <item>Volley Ball</item>
+        <item>Hockey</item>
+        <item>Swimming</item>
+    </string-array>
+
+</resources>
