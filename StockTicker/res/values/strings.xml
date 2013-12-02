@@ -11,6 +11,10 @@
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
     
+    <string name="user">User/E-Mail</string>
+    <string name="password">Passwort</string>
+    <string name="login">Login</string>
+    
     <string name="err_no_stocks">Keine Aktien ausgewählt!</string>
     <string name="err_date_to">Datum muss nach Beginndatum liegen!</string>
     

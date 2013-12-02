@@ -6,9 +6,9 @@ import java.util.List;
 
 import at.jku.stockticker.pojo.Stock;
 
-public class OptionsService extends AbstractArrayService<Stock> {
+public class PrizesService extends AbstractArrayService<Stock> {
 
-	private static final String URL = "http://10.0.2.2:1337/options";
+	private static final String URL = "http://127.0.0.1:1337/options";
 	private static final String TAG_ID = "id";
 	private static final String TAG_NAME = "name";
 
