@@ -14,6 +14,7 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -191,24 +192,23 @@ public class MainActivity extends Activity {
 			return stocks;
 			*/
 		(new Thread(new Runnable() {
-				
-				@Override
-				public void run() {
+
+			@Override
+			public void run() {
 				OptionsService OptionsService = new OptionsService();
-				List<Stock> stockoptions = new ArrayList<Stock>();
+				List<Stock> stockoptions = null;
 				try {
 					stockoptions = OptionsService.getData();
-					System.out.println("stockoptions:" + stockoptions);
+					Log.i("MainActivity", "stockoptions:" + stockoptions);
 				} catch (IOException e) {
 					e.printStackTrace();
-					System.out.println("ioexception:" + e);
-				
-				//return stockoptions;
-				
-				}}}
-				)).start();
-			//return getResources().getStringArray(R.array.stockoptions);
-			//return availableStocks;
+					Log.i("MainActivity", "ioexception:" + e);
+
+				}
+			}
+		})).start();
+		// return getResources().getStringArray(R.array.stockoptions);
+		// return availableStocks;
 		return availableStocks;
 	}
 	
