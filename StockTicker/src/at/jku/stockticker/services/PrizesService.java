@@ -7,21 +7,27 @@ import java.util.List;
 
 import android.util.Log;
 import at.jku.stockticker.pojo.Prize;
+import at.jku.stockticker.pojo.Stock;
 
 public class PrizesService extends AbstractArrayService<Prize> {
 
-	private static final String URL = "http://127.0.0.1:1337/prize";
+	private static final String URL = "http://10.0.2.2:1337/prize";
 	private static final String TAG_ID = "id";
 	private static final String TAG_PRIZE = "prize";
 	private static final String TAG_TIME = "time";
 
 	@Override
+	/**
+	 * @param Param1 - Stock object
+	 * @param Param2 - Date object start
+	 * @param Param3 - Date object end
+	 */
 	protected List<Prize> doInBackground(Object... o) {
 		List<Prize> prizes = new ArrayList<Prize>();
 
 		try {
 			String url = URL;
-			url += "?id=" + o[1] + "&start=" + o[2] + "&end=" + o[3];
+			url += "?id=" + ((Stock)o[0]).getId() + "&start=" + ((Date)o[1]).getTime() + "&end=" + ((Date)o[2]).getTime();
 			super.initializeReader(url);
 			
 			reader.beginArray();

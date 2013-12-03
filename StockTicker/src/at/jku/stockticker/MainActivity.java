@@ -26,8 +26,10 @@ import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+import at.jku.stockticker.pojo.Prize;
 import at.jku.stockticker.pojo.Stock;
 import at.jku.stockticker.services.OptionsService;
+import at.jku.stockticker.services.PrizesService;
 
 public class MainActivity extends Activity {
 
@@ -66,7 +68,7 @@ public class MainActivity extends Activity {
 		
 		this.availableStocks = this.getStocks();
 		this.portfolio = this.getSavedStocks();
-		this.selectedStocks = new ArrayList<Stock>(this.portfolio);
+		this.selectedStocks = new ArrayList<Stock>();
 
 		StrictMode.ThreadPolicy policy = new StrictMode.
 		ThreadPolicy.Builder().permitAll().build();
@@ -162,17 +164,17 @@ public class MainActivity extends Activity {
 					Toast.makeText(MainActivity.this, R.string.err_no_stocks, Toast.LENGTH_LONG).show();
 					return;
 				}
-				
-				Intent intent = new SalesGrowthChart().execute(MainActivity.this);
-				startActivity(intent);
+				Log.i("yeah", MainActivity.this.getStockPrizes().toString());
+//				Intent intent = new SalesGrowthChart().execute(MainActivity.this);
+//				startActivity(intent);
 			}
 		});
 	}
 
 	private List<Stock> getSavedStocks() {
 		List<Stock> stocks = new ArrayList<Stock>();
-		stocks.add(new Stock("1", "test1", null));
-		stocks.add(new Stock("4", "test4", null));
+//		stocks.add(new Stock("1", "test1", null));
+//		stocks.add(new Stock("4", "test4", null));
 		return stocks;
 	}
 
@@ -196,8 +198,19 @@ public class MainActivity extends Activity {
 	}
 	
 	
-	private void getStockPrices() {
+	private List<Prize> getStockPrizes() {
+		List<Prize> prizes = new ArrayList<Prize>();
 		
+		try {
+			AsyncTask<Object, Void, List<Prize>> task = null;
+			for(Stock st : this.selectedStocks) {
+				task = new PrizesService().execute(st, this.fromDate, this.toDate);
+				prizes.addAll(task.get());
+			}
+		} catch (Exception e) {
+			Log.e(MainActivity.class.getName(), e.getLocalizedMessage());
+		}
+		return prizes;		
 	}
 
 	@Override
