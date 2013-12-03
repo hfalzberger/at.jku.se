@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -170,8 +171,8 @@ public class MainActivity extends Activity {
 
 	private List<Stock> getSavedStocks() {
 		List<Stock> stocks = new ArrayList<Stock>();
-		stocks.add(new Stock(1, "test1"));
-		stocks.add(new Stock(4, "test4"));
+		stocks.add(new Stock("1", "test1", null));
+		stocks.add(new Stock("4", "test4", null));
 		return stocks;
 	}
 
@@ -182,34 +183,16 @@ public class MainActivity extends Activity {
 	 * @throws IOException 
 	 */
 	private List<Stock> getStocks() {		
-//		try {
-			//return new OptionsService().getData();
-		//List<Stock> stocks = new ArrayList<Stock>();
-		/*stocks.add(new Stock(1, "test1"));
-			stocks.add(new Stock(2, "test2"));
-			stocks.add(new Stock(3, "test3"));
-			stocks.add(new Stock(4, "test4"));
-			return stocks;
-			*/
-		(new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				OptionsService OptionsService = new OptionsService();
-				List<Stock> stockoptions = null;
-				try {
-					stockoptions = OptionsService.getData();
-					Log.i("MainActivity", "stockoptions:" + stockoptions);
-				} catch (IOException e) {
-					e.printStackTrace();
-					Log.i("MainActivity", "ioexception:" + e);
-
-				}
-			}
-		})).start();
-		// return getResources().getStringArray(R.array.stockoptions);
-		// return availableStocks;
-		return availableStocks;
+		List<Stock> stocks = null;
+		
+		try {
+			AsyncTask<Object, Void, List<Stock>> task = null;
+			task = new OptionsService().execute();
+			stocks = task.get();
+		} catch (Exception e) {
+			Log.e(MainActivity.class.getName(), e.getLocalizedMessage());
+		}
+		return stocks;
 	}
 	
 	

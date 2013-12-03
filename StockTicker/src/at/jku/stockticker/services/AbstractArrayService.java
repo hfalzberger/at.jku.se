@@ -17,7 +17,7 @@ import android.os.AsyncTask;
 import android.util.JsonReader;
 import android.util.Log;
 
-public abstract class AbstractArrayService<T> {
+public abstract class AbstractArrayService<T> extends AsyncTask<Object, Void, List<T>>{
 
 	protected JsonReader reader = null;
 
@@ -39,5 +39,5 @@ public abstract class AbstractArrayService<T> {
 		this.reader = new JsonReader(new InputStreamReader(content));
 	}
 
-	public abstract List<T> getData() throws IOException;
+	protected abstract List<T> doInBackground(Object...params);
 }
