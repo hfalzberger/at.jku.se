@@ -13,6 +13,7 @@ import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,6 +25,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 import at.jku.stockticker.pojo.Stock;
+import at.jku.stockticker.services.OptionsService;
 
 public class MainActivity extends Activity {
 
@@ -64,6 +66,10 @@ public class MainActivity extends Activity {
 		this.portfolio = this.getSavedStocks();
 		this.selectedStocks = new ArrayList<Stock>(this.portfolio);
 
+		StrictMode.ThreadPolicy policy = new StrictMode.
+		ThreadPolicy.Builder().permitAll().build();
+		StrictMode.setThreadPolicy(policy); 
+		
 		this.fromDateText.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -169,7 +175,7 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * Torben: Hier die Aktien zurückgeben.
+	 * Torben: Hier die Aktien zurueckgeben.
 	 * 
 	 * @return
 	 * @throws IOException 
@@ -177,17 +183,35 @@ public class MainActivity extends Activity {
 	private List<Stock> getStocks() {		
 //		try {
 			//return new OptionsService().getData();
-			List<Stock> stocks = new ArrayList<Stock>();
-			stocks.add(new Stock(1, "test1"));
+		//List<Stock> stocks = new ArrayList<Stock>();
+		/*stocks.add(new Stock(1, "test1"));
 			stocks.add(new Stock(2, "test2"));
 			stocks.add(new Stock(3, "test3"));
 			stocks.add(new Stock(4, "test4"));
 			return stocks;
-//		} catch (IOException e) {
-//			Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-//			return null;
-//		}
+			*/
+		(new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+				OptionsService OptionsService = new OptionsService();
+				List<Stock> stockoptions = new ArrayList<Stock>();
+				try {
+					stockoptions = OptionsService.getData();
+					System.out.println("stockoptions:" + stockoptions);
+				} catch (IOException e) {
+					e.printStackTrace();
+					System.out.println("ioexception:" + e);
+				
+				//return stockoptions;
+				
+				}}}
+				)).start();
+			//return getResources().getStringArray(R.array.stockoptions);
+			//return availableStocks;
+		return availableStocks;
 	}
+	
 	
 	private void getStockPrices() {
 		
