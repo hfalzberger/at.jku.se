@@ -1,8 +1,12 @@
 gen/
 bin/
+.settings/
+assets/
+
 /.classpath
 /.project
-/assets
+
+
 # Eclipse project files
 .classpath
 .project
