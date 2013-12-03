@@ -1,0 +1,9 @@
+gen/
+bin/
+/.classpath
+/.project
+/assets
+# Eclipse project files
+.classpath
+.project
+*.class
