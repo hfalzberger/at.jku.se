@@ -1,13 +1,4 @@
-gen/
-bin/
-.settings/
-assets/
-
-/.classpath
-/.project
-
-
-# Eclipse project files
-.classpath
-.project
-*.class
+/gen
+/bin
+/.settings
+/assets
