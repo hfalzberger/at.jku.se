@@ -13,7 +13,7 @@ public class PrizesService extends AbstractArrayService<Prize> {
 
 	private static final String URL = "http://10.0.2.2:1337/prize";
 	private static final String TAG_ID = "id";
-	private static final String TAG_PRIZE = "prize";
+	private static final String TAG_PRIZE = "price";
 	private static final String TAG_TIME = "time";
 
 	@Override

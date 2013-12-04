@@ -5,8 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -164,9 +166,9 @@ public class MainActivity extends Activity {
 					Toast.makeText(MainActivity.this, R.string.err_no_stocks, Toast.LENGTH_LONG).show();
 					return;
 				}
-				Log.i("yeah", MainActivity.this.getStockPrizes().toString());
-//				Intent intent = new SalesGrowthChart().execute(MainActivity.this);
-//				startActivity(intent);
+				StockChart chart = new StockChart(MainActivity.this.getStockPrizes());
+				Intent chartIntent = chart.execute(MainActivity.this);
+				startActivity(chartIntent);
 			}
 		});
 	}
@@ -198,19 +200,19 @@ public class MainActivity extends Activity {
 	}
 	
 	
-	private List<Prize> getStockPrizes() {
-		List<Prize> prizes = new ArrayList<Prize>();
+	private Map<Stock, List<Prize>> getStockPrizes() {
+		Map<Stock, List<Prize>> result = new HashMap<Stock, List<Prize>>();
 		
 		try {
 			AsyncTask<Object, Void, List<Prize>> task = null;
 			for(Stock st : this.selectedStocks) {
 				task = new PrizesService().execute(st, this.fromDate, this.toDate);
-				prizes.addAll(task.get());
+				result.put(st, task.get());
 			}
 		} catch (Exception e) {
 			Log.e(MainActivity.class.getName(), e.getLocalizedMessage());
 		}
-		return prizes;		
+		return result;		
 	}
 
 	@Override
