@@ -1,19 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?><LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:layout_marginTop="10dp" 
+    android:layout_marginLeft="10dp" 
+    android:layout_marginRight="10dp">
 
     <TextView
         android:id="@+id/textFromLabel"
         android:labelFor="@+id/dateFrom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/from" />
 
     <EditText
         android:id="@+id/dateFrom"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="date" >
@@ -26,39 +31,46 @@
         android:labelFor="@+id/dateTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginTop="10dp"
         android:text="@string/to" />
 
     <EditText
         android:id="@+id/dateTo"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="date" />
+
     
     <LinearLayout
         style="?android:attr/buttonBarStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:layout_marginTop="20dp">
 
         <Button
-            style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/buttonStocks"
-            android:layout_width="wrap_content"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
+            android:layout_weight="0.5"
             android:text="@string/stocks" />
 
         <Button
-            style="?android:attr/buttonBarButtonStyle"
             android:id="@+id/buttonSavedStocks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/savedStocks" />
-        
-        <Button
             style="?android:attr/buttonBarButtonStyle"
-            android:id="@+id/buttonShow"
-            android:layout_width="wrap_content"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="@string/savedStocks" />
+
+        <Button
+            android:id="@+id/buttonShow"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
             android:text="@string/show" />
     </LinearLayout>
 
