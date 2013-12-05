@@ -15,14 +15,14 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import at.jku.stockticker.pojo.Prize;
+import at.jku.stockticker.pojo.Price;
 import at.jku.stockticker.pojo.Stock;
 
 public class StockChart {
 
-	private Map<Stock, List<Prize>> data;
+	private Map<Stock, List<Price>> data;
 	
-	public StockChart(Map<Stock, List<Prize>> stockPrizes) {
+	public StockChart(Map<Stock, List<Price>> stockPrizes) {
 		this.data = stockPrizes;
 	}
 
@@ -41,8 +41,8 @@ public class StockChart {
 		
 		int j = 0;
 		
-		for(Map.Entry<Stock, List<Prize>> entry : this.data.entrySet()) {
-			List<Prize> prizes = entry.getValue();
+		for(Map.Entry<Stock, List<Price>> entry : this.data.entrySet()) {
+			List<Price> prizes = entry.getValue();
 			double[] val = new double[prizes.size()];
 			Date[] dat = new Date[prizes.size()];
 			
@@ -64,7 +64,7 @@ public class StockChart {
 			}
 			
 			titles[j] = entry.getKey().getSymbol();
-			colors[j] = Color.rgb((int)(Math.random()*255), (int)(Math.random())*255, (int)(Math.random()*255));
+			colors[j] = Color.rgb(100+(int)(Math.random()*155), 100+(int)(Math.random())*155, 100+(int)(Math.random()*155));
 			styles[j] = PointStyle.TRIANGLE;
 			values.add(val);
 			dates.add(dat);
@@ -73,23 +73,25 @@ public class StockChart {
 	    
 	    
 	    XYMultipleSeriesRenderer renderer = buildRenderer(colors, styles);
+	    renderer.setXLabels(10);
+	    renderer.setYLabels(10);
+	    renderer.setXLabelsAngle(30);
+	    renderer.setFitLegend(true);
+	    renderer.setXLabelsPadding(10);
 	
 	    setChartSettings(
 	    		renderer, 
 	    		context.getString(R.string.chart_title), 
-	    		context.getString(R.string.chart_xlabel), 
+	    		"",//context.getString(R.string.chart_xlabel), 
 	    		context.getString(R.string.chart_ylabel), 
 	    		dateMin.getTime(),
 	    		dateMax.getTime(),
 	    		valMin - (valMax-valMin)/4,
 	    		valMax + (valMax-valMin)/4,
-	    		Color.GRAY, 
+	    		Color.LTGRAY, 
 	    		Color.LTGRAY);
 	    
-	    renderer.setXLabels(20);
-	    renderer.setYLabels(10);
-	    
-	    return ChartFactory.getTimeChartIntent(context, this.buildDataset(titles, dates, values), renderer, "dd");
+	    return ChartFactory.getTimeChartIntent(context, this.buildDataset(titles, dates, values), renderer, "dd.MM HH:mm");
 	}
 
 	private XYMultipleSeriesDataset buildDataset(String[] titles,

@@ -3,15 +3,15 @@ package at.jku.stockticker.pojo;
 import java.util.Date;
 
 //[{"id":"AT0000603709","price":88.69,"time":1386102039207}]
-public class Prize {
+public class Price {
 	private String id;
 	private double price;
 	private Date time;
 	
-	public Prize() {
+	public Price() {
 	}
 	
-	public Prize(String id, float price, Date time) {
+	public Price(String id, float price, Date time) {
 		super();
 		this.id = id;
 		this.price = price;

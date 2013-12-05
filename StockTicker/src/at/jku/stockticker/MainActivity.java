@@ -26,10 +26,10 @@ import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
-import at.jku.stockticker.pojo.Prize;
+import at.jku.stockticker.pojo.Price;
 import at.jku.stockticker.pojo.Stock;
 import at.jku.stockticker.services.OptionsService;
-import at.jku.stockticker.services.PrizesService;
+import at.jku.stockticker.services.PriceService;
 
 public class MainActivity extends Activity {
 
@@ -188,13 +188,13 @@ public class MainActivity extends Activity {
 	}
 	
 	
-	private Map<Stock, List<Prize>> getStockPrizes() {
-		Map<Stock, List<Prize>> result = new HashMap<Stock, List<Prize>>();
+	private Map<Stock, List<Price>> getStockPrizes() {
+		Map<Stock, List<Price>> result = new HashMap<Stock, List<Price>>();
 		
 		try {
-			AsyncTask<Object, Void, List<Prize>> task = null;
+			AsyncTask<Object, Void, List<Price>> task = null;
 			for(Stock st : this.selectedStocks) {
-				task = new PrizesService().execute(st, this.fromDate, this.toDate);
+				task = new PriceService().execute(st, this.fromDate, this.toDate);
 				result.put(st, task.get());
 			}
 		} catch (Exception e) {

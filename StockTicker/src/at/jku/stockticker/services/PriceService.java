@@ -6,10 +6,10 @@ import java.util.Date;
 import java.util.List;
 
 import android.util.Log;
-import at.jku.stockticker.pojo.Prize;
+import at.jku.stockticker.pojo.Price;
 import at.jku.stockticker.pojo.Stock;
 
-public class PrizesService extends AbstractArrayService<Prize> {
+public class PriceService extends AbstractArrayService<Price> {
 
 	private static final String URL = "http://10.0.2.2:1337/prize";
 	private static final String TAG_ID = "id";
@@ -22,8 +22,8 @@ public class PrizesService extends AbstractArrayService<Prize> {
 	 * @param Param2 - Date object start
 	 * @param Param3 - Date object end
 	 */
-	protected List<Prize> doInBackground(Object... o) {
-		List<Prize> prizes = new ArrayList<Prize>();
+	protected List<Price> doInBackground(Object... o) {
+		List<Price> prizes = new ArrayList<Price>();
 
 		try {
 			String url = URL;
@@ -42,8 +42,8 @@ public class PrizesService extends AbstractArrayService<Prize> {
 		return prizes;
 	}
 
-	private Prize readStock() throws IOException {
-		Prize p = new Prize();
+	private Price readStock() throws IOException {
+		Price p = new Price();
 
 		reader.beginObject();
 		while (reader.hasNext()) {
