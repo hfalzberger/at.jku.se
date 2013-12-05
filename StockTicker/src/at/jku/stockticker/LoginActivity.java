@@ -25,7 +25,7 @@ public class LoginActivity extends Activity {
 		usernameText = (EditText) findViewById(R.id.username);
 		passwordText = (EditText) findViewById(R.id.password);
 		loginBtn = (Button) findViewById(R.id.loginButton);
-
+		session = new SessionManager(getApplicationContext());
 		
         loginBtn.setOnClickListener(new View.OnClickListener() {
              
@@ -42,10 +42,10 @@ public class LoginActivity extends Activity {
                         startActivity(i);
                         finish();
                     }else{
-                    	Toast.makeText(LoginActivity.this, "Username/Password is incorrect", Toast.LENGTH_LONG).show();
+                    	Toast.makeText(LoginActivity.this, R.string.err_wrong_credentials, Toast.LENGTH_LONG).show();
                     }               
                 }else{
-                    Toast.makeText(LoginActivity.this, "Please enter username and password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, R.string.err_no_credentials, Toast.LENGTH_LONG).show();
                 }
             }
         });

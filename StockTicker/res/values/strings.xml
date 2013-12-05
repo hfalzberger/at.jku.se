@@ -17,6 +17,12 @@
     
     <string name="err_no_stocks">Keine Aktien ausgewählt!</string>
     <string name="err_date_to">Datum muss nach Beginndatum liegen!</string>
+    <string name="err_no_credentials">Username/Passwort eingeben!</string>
+    <string name="err_wrong_credentials">Username/Passwort nicht korrekt!</string>
+    
+    <string name="chart_title">Aktien</string>
+    <string name="chart_xlabel">Datum</string>
+    <string name="chart_ylabel">€</string>
     
     
     <string-array name="test_array">

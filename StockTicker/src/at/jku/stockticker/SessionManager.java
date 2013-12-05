@@ -25,9 +25,6 @@ public class SessionManager {
         editor = pref.edit();
     }
      
-    /**
-     * Create login session
-     * */
     public void createLoginSession(String name, String password){
         editor.putBoolean(IS_LOGIN, true);
          
@@ -36,12 +33,7 @@ public class SessionManager {
          
         editor.commit();
     }   
-     
-    /**
-     * Check login method wil check user login status
-     * If false it will redirect user to login page
-     * Else won't do anything
-     * */
+
     public void checkLogin(){
         if(!this.isLogged()){
             Intent i = new Intent(_context, LoginActivity.class);
@@ -53,9 +45,6 @@ public class SessionManager {
          
     }
      
-    /**
-     * Get stored session data
-     * */
     public HashMap<String, String> getUserDetails(){
         HashMap<String, String> user = new HashMap<String, String>();
         user.put(KEY_NAME, pref.getString(KEY_NAME, null));
@@ -63,10 +52,7 @@ public class SessionManager {
          
         return user;
     }
-     
-    /**
-     * Clear session details
-     * */
+
     public void logoutUser(){
         editor.clear();
         editor.commit();

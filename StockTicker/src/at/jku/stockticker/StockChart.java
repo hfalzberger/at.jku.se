@@ -76,9 +76,9 @@ public class StockChart {
 	
 	    setChartSettings(
 	    		renderer, 
-	    		"Aktien", 
-	    		"", 
-	    		"", 
+	    		context.getString(R.string.chart_title), 
+	    		context.getString(R.string.chart_xlabel), 
+	    		context.getString(R.string.chart_ylabel), 
 	    		dateMin.getTime(),
 	    		dateMax.getTime(),
 	    		valMin - (valMax-valMin)/4,
