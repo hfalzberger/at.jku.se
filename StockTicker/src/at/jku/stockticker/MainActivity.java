@@ -16,7 +16,6 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -70,11 +69,7 @@ public class MainActivity extends Activity {
 		
 		this.availableStocks = this.getStocks();
 		this.portfolio = this.getSavedStocks();
-		this.selectedStocks = new ArrayList<Stock>();
-
-		StrictMode.ThreadPolicy policy = new StrictMode.
-		ThreadPolicy.Builder().permitAll().build();
-		StrictMode.setThreadPolicy(policy); 
+		this.selectedStocks = new ArrayList<Stock>(this.portfolio);
 		
 		this.fromDateText.setOnClickListener(new OnClickListener() {
 			@Override
@@ -175,8 +170,8 @@ public class MainActivity extends Activity {
 
 	private List<Stock> getSavedStocks() {
 		List<Stock> stocks = new ArrayList<Stock>();
-//		stocks.add(new Stock("1", "test1", null));
-//		stocks.add(new Stock("4", "test4", null));
+		stocks.add(new Stock("AT0000603709", "test1", "t1"));
+		stocks.add(new Stock("AT00000AMAG3", "test4", "t2"));
 		return stocks;
 	}
 

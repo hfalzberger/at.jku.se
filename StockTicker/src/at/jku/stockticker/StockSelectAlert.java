@@ -31,30 +31,26 @@ public class StockSelectAlert implements OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
-		dialogBuilder.setIcon(R.drawable.ic_launcher);
-		dialogBuilder.setNegativeButton(R.string.cancel, null);
-		dialogBuilder.setPositiveButton(R.string.ok, null);
-		
 		ArrayAdapter<Stock> adapter = new ArrayAdapter<Stock>(
 				context,
 				android.R.layout.simple_list_item_multiple_choice,
 				items);
 		
-		dialogBuilder.setAdapter(adapter, null);
-		AlertDialog dialog = dialogBuilder.create();
-		
-		ListView listView = dialog.getListView();		
+		ListView listView = new ListView(context);		
         listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(onItemClickListener);
         
 		for(int i=0; i<items.size(); i++) {
-			if(selected.contains(items.get(i)))
+			if(selected.contains(items.get(i))) {
 				listView.setItemChecked(i, true);
+			}
 		}
 		
-		listView.setOnItemClickListener(onItemClickListener);
-        
-        dialog.show();
+		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
+		dialogBuilder.setView(listView);
+		dialogBuilder.setNegativeButton(R.string.cancel, null);
+		dialogBuilder.setPositiveButton(R.string.ok, null);
+		dialogBuilder.create().show();
 	}
 }

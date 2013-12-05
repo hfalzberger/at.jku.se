@@ -36,6 +36,6 @@ public class Stock {
 		return name;
 	}
 	public boolean equals(Object o) {
-		return ((Stock)o).id == this.id;
+		return ((Stock)o).id.equals(this.id);
 	}
 }
