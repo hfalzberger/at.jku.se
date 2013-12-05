@@ -1,6 +1,5 @@
 package at.jku.stockticker;
 
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -175,12 +174,6 @@ public class MainActivity extends Activity {
 		return stocks;
 	}
 
-	/**
-	 * Torben: Hier die Aktien zurueckgeben.
-	 * 
-	 * @return
-	 * @throws IOException 
-	 */
 	private List<Stock> getStocks() {		
 		List<Stock> stocks = null;
 		
