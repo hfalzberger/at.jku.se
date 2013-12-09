@@ -1,4 +1,4 @@
-package at.jku.stockticker;
+package at.jku.stockticker.ui;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,6 +26,7 @@ import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
+import at.jku.stockticker.R;
 import at.jku.stockticker.pojo.Price;
 import at.jku.stockticker.pojo.Stock;
 import at.jku.stockticker.services.OptionsService;
@@ -33,8 +34,8 @@ import at.jku.stockticker.services.PriceService;
 
 public class MainActivity extends Activity {
 
-	private EditText fromDateText;
-	private EditText toDateText;
+	private EditText fromDateTxt;
+	private EditText toDateTxt;
 	private Button stocksBtn;
 	private Button savedStocksBtn;
 	private Button showBtn;
@@ -54,8 +55,8 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		this.fromDateText = (EditText) findViewById(R.id.dateFrom);
-		this.toDateText = (EditText) findViewById(R.id.dateTo);
+		this.fromDateTxt = (EditText) findViewById(R.id.dateFrom);
+		this.toDateTxt = (EditText) findViewById(R.id.dateTo);
 		this.stocksBtn = (Button) findViewById(R.id.buttonStocks);
 		this.savedStocksBtn = (Button) findViewById(R.id.buttonSavedStocks);
 		this.showBtn = (Button) findViewById(R.id.buttonShow);
@@ -63,14 +64,14 @@ public class MainActivity extends Activity {
 		this.sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);	
 		this.fromDate = Calendar.getInstance().getTime();
 		this.toDate = Calendar.getInstance().getTime();
-		this.fromDateText.setText(sdf.format(this.fromDate));
-		this.toDateText.setText(sdf.format(this.toDate));
+		this.fromDateTxt.setText(sdf.format(this.fromDate));
+		this.toDateTxt.setText(sdf.format(this.toDate));
 		
 		this.availableStocks = this.getStocks();
 		this.portfolio = this.getSavedStocks();
 		this.selectedStocks = new ArrayList<Stock>(this.portfolio);
 		
-		this.fromDateText.setOnClickListener(new OnClickListener() {
+		this.fromDateTxt.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Calendar cal = Calendar.getInstance();
@@ -84,7 +85,7 @@ public class MainActivity extends Activity {
 								cal.set(Calendar.MONTH, monthOfYear);
 								cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 								
-								fromDateText.setText(sdf.format(cal.getTime()));
+								fromDateTxt.setText(sdf.format(cal.getTime()));
 								fromDate = cal.getTime();							
 							}
 						}, 
@@ -94,7 +95,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		this.toDateText.setOnClickListener(new OnClickListener() {
+		this.toDateTxt.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Calendar cal = Calendar.getInstance();
@@ -113,7 +114,7 @@ public class MainActivity extends Activity {
 											R.string.err_date_to, 
 											Toast.LENGTH_LONG).show();
 								} else {
-									toDateText.setText(sdf.format(cal.getTime()));
+									toDateTxt.setText(sdf.format(cal.getTime()));
 									toDate = cal.getTime();
 								}
 							}

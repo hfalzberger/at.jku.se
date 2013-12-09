@@ -11,11 +11,17 @@
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
     
-    <string name="user">User/E-Mail</string>
+    <string name="firstname">Vorname</string>
+    <string name="surname">Nachname</string>
+    <string name="user">E-Mail</string>
     <string name="password">Passwort</string>
+    <string name="password_reply">Passwort wiederholen</string>
     <string name="login">Login</string>
+    <string name="signup">Registrieren</string>
     
     <string name="err_no_stocks">Keine Aktien ausgewählt!</string>
+    <string name="err_fillin">Alle Daten angeben!</string>
+    <string name="err_password">Alle Daten angeben!</string>
     <string name="err_date_to">Datum muss nach Beginndatum liegen!</string>
     <string name="err_no_credentials">Username/Passwort eingeben!</string>
     <string name="err_wrong_credentials">Username/Passwort nicht korrekt!</string>

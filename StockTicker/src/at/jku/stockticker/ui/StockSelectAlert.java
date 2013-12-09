@@ -1,4 +1,4 @@
-package at.jku.stockticker;
+package at.jku.stockticker.ui;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import at.jku.stockticker.R;
 import at.jku.stockticker.pojo.Stock;
 
 public class StockSelectAlert implements OnClickListener {

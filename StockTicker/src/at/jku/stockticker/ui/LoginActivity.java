@@ -1,4 +1,4 @@
-package at.jku.stockticker;
+package at.jku.stockticker.ui;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,31 +8,46 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import at.jku.stockticker.R;
+import at.jku.stockticker.SessionManager;
 
 public class LoginActivity extends Activity {
 	
 	SessionManager session;
 	
-	private EditText usernameText;
-	private EditText passwordText;
+	private EditText usernameTxt;
+	private EditText passwordTxt;
 	private Button loginBtn;
+	private Button signupBtn;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-		usernameText = (EditText) findViewById(R.id.username);
-		passwordText = (EditText) findViewById(R.id.password);
+		usernameTxt = (EditText) findViewById(R.id.usernameLogin);
+		passwordTxt = (EditText) findViewById(R.id.passwordLogin);
 		loginBtn = (Button) findViewById(R.id.loginButton);
+		signupBtn = (Button) findViewById(R.id.signUpButtonLogin);
+		
 		session = new SessionManager(getApplicationContext());
+		
+		signupBtn.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent(getApplicationContext(), SignupActivity.class);
+                startActivity(i);
+                finish();				
+			}
+		});
 		
         loginBtn.setOnClickListener(new View.OnClickListener() {
              
             @Override
             public void onClick(View arg0) {
-                String username = usernameText.getText().toString();
-                String password = passwordText.getText().toString();
+                String username = usernameTxt.getText().toString();
+                String password = passwordTxt.getText().toString();
                  
                 if(username.trim().length() > 0 && password.trim().length() > 0){
                     if(username.equals("test") && password.equals("test")){

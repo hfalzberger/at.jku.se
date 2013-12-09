@@ -9,14 +9,14 @@
 
     <TextView
         android:id="@+id/userLabel"
-        android:labelFor="@+id/username"
+        android:labelFor="@+id/usernameLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/user" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/usernameLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -27,7 +27,7 @@
 
     <TextView
         android:id="@+id/passwordLabel"
-        android:labelFor="@+id/password"
+        android:labelFor="@+id/passwordLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -35,17 +35,31 @@
         android:text="@string/password" />
 
     <EditText
-        android:id="@+id/password"
+        android:id="@+id/passwordLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword" />
 
-    <Button
-        android:id="@+id/loginButton"
+    <LinearLayout
+        style="?android:attr/buttonBarStyle"
         android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/login" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/loginButton"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login" />
+
+        <Button
+            android:id="@+id/signUpButtonLogin"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signup" />
+    </LinearLayout>
 
 </LinearLayout>

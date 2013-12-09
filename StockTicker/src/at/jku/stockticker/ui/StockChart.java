@@ -1,4 +1,4 @@
-package at.jku.stockticker;
+package at.jku.stockticker.ui;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,6 +15,7 @@ import org.achartengine.renderer.XYSeriesRenderer;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import at.jku.stockticker.R;
 import at.jku.stockticker.pojo.Price;
 import at.jku.stockticker.pojo.Stock;
 
