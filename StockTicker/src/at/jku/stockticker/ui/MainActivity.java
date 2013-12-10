@@ -158,7 +158,7 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				try {
-					Toast.makeText(MainActivity.this, new PreferencesService().set(portfolio), Toast.LENGTH_LONG).show();
+					Toast.makeText(MainActivity.this, new PreferencesService().send(portfolio), Toast.LENGTH_LONG).show();
 				} catch (Exception e) {
 					Log.e(MainActivity.this.getClass().getName(), e.getLocalizedMessage());
 				}		
@@ -182,7 +182,7 @@ public class MainActivity extends Activity {
 	private List<Stock> getSavedStocks() {
 		List<Stock> stocks = null;
 		try {
-			stocks = new PreferencesService().get();
+			stocks = new PreferencesService().retrieve();
 		} catch (Exception e) {
 			Log.e(MainActivity.class.getName(), e.getLocalizedMessage());
 		}
@@ -192,7 +192,7 @@ public class MainActivity extends Activity {
 	private List<Stock> getStocks() {		
 		List<Stock> stocks = null;
 		try {
-			stocks = new OptionsService().get();
+			stocks = new OptionsService().retrieve();
 		} catch (Exception e) {
 			Log.e(MainActivity.class.getName(), e.getLocalizedMessage());
 		}
@@ -204,7 +204,7 @@ public class MainActivity extends Activity {
 		try {
 			PriceService priceService = new PriceService();
 			for(Stock st : this.selectedStocks) {
-				result.put(st, priceService.get(st, this.fromDate, this.toDate));
+				result.put(st, priceService.retrieve(st, this.fromDate, this.toDate));
 			}
 		} catch (Exception e) {
 			Log.e(MainActivity.class.getName(), e.getLocalizedMessage());

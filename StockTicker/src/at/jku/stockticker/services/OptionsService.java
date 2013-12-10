@@ -6,20 +6,20 @@ import java.util.List;
 
 import at.jku.stockticker.pojo.Stock;
 
-public class OptionsService extends AbstractArrayService<Stock> {
+public class OptionsService extends AbstractService implements RetrieveDataService<Stock> {
 
-	protected static String URL = "http://10.0.2.2:1337/options";
-	protected static final String TAG_ID = "id";
-	protected static final String TAG_NAME = "name";
-	protected static final String TAG_SYMBOL = "symbol";
+	private static final String URL = "http://10.0.2.2:1337/options";
+	private static final String TAG_ID = "id";
+	private	static final String TAG_NAME = "name";
+	private static final String TAG_SYMBOL = "symbol";
 
 	@Override
-	public List<Stock> get(Object... object) throws Exception {
+	public List<Stock> retrieve(Object... object) throws Exception {
 		super.initializeReader(URL);
 		return readStocks();
 	}
 
-	public List<Stock> readStocks() throws IOException {
+	private List<Stock> readStocks() throws IOException {
 		List<Stock> stocks = new ArrayList<Stock>();
 
 		reader.beginArray();
@@ -31,7 +31,7 @@ public class OptionsService extends AbstractArrayService<Stock> {
 		return stocks;
 	}
 
-	protected Stock readStock() throws IOException {
+	private Stock readStock() throws IOException {
 		Stock s = new Stock();
 
 		reader.beginObject();

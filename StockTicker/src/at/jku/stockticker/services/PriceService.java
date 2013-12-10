@@ -8,7 +8,7 @@ import java.util.List;
 import at.jku.stockticker.pojo.Price;
 import at.jku.stockticker.pojo.Stock;
 
-public class PriceService extends AbstractArrayService<Price> {
+public class PriceService extends AbstractService implements RetrieveDataService<Price> {
 
 	private static final String URL = "http://10.0.2.2:1337/prize";
 	private static final String TAG_ID = "id";
@@ -21,7 +21,7 @@ public class PriceService extends AbstractArrayService<Price> {
 	 * @param Param2 - Date object start
 	 * @param Param3 - Date object end
 	 */
-	public List<Price> get(Object... o) throws Exception {
+	public List<Price> retrieve(Object... o) throws Exception {
 		List<Price> prizes = new ArrayList<Price>();
 
 		String url = URL;

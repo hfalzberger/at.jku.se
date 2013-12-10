@@ -1,7 +1,6 @@
 package at.jku.stockticker.services;
 
 import java.io.InputStreamReader;
-import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -11,7 +10,7 @@ import android.os.AsyncTask;
 import android.util.JsonReader;
 import android.util.Log;
 
-public abstract class AbstractArrayService<T> {
+public abstract class AbstractService {
 
 	protected JsonReader reader = null;
 
@@ -25,6 +24,4 @@ public abstract class AbstractArrayService<T> {
 		
 		this.reader = new JsonReader(new InputStreamReader(res.getEntity().getContent()));
 	}
-
-	public abstract List<T> get(Object...params) throws Exception;
 }
