@@ -3,11 +3,13 @@ package at.jku.stockticker.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import at.jku.stockticker.R;
+import at.jku.stockticker.services.UserManagementService;
 
 public class SignupActivity extends Activity {
 	
@@ -48,8 +50,15 @@ public class SignupActivity extends Activity {
 				} else if(!password.equals(passwordReply)) {
 					Toast.makeText(SignupActivity.this, R.string.err_password, Toast.LENGTH_LONG).show();
 				} else {
+					try {
+						String ret = new UserManagementService().signUp(username, password);
+						Toast.makeText(SignupActivity.this, ret, Toast.LENGTH_LONG).show();
+					} catch (Exception e) {
+						Log.e(this.getClass().getName(), e.getLocalizedMessage());
+						Toast.makeText(SignupActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+					}
+					
 					Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-				
                     startActivity(i);
                     finish();
 				}				

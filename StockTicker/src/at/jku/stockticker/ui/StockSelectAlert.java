@@ -5,27 +5,30 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView.OnItemClickListener;
+import android.content.DialogInterface.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import at.jku.stockticker.R;
 import at.jku.stockticker.pojo.Stock;
 
-public class StockSelectAlert implements OnClickListener {
+public class StockSelectAlert implements View.OnClickListener {
 	
 	private Context context;
 	private OnItemClickListener onItemClickListener;
+	private OnClickListener okListener;
+	
 	private List<Stock> selected;
 	private List<Stock> items;
 	
 	
 	public StockSelectAlert(List<Stock> items, List<Stock> selected, Context context,
-			OnItemClickListener onItemClickListener) {
+			OnItemClickListener onItemClickListener, OnClickListener okListener) {
 		super();
 		this.items = items;
 		this.selected = selected;
 		this.context = context;
+		this.okListener = okListener;
 		this.onItemClickListener = onItemClickListener;
 	}
 
@@ -51,7 +54,7 @@ public class StockSelectAlert implements OnClickListener {
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
 		dialogBuilder.setView(listView);
 		dialogBuilder.setNegativeButton(R.string.cancel, null);
-		dialogBuilder.setPositiveButton(R.string.ok, null);
+		dialogBuilder.setPositiveButton(R.string.ok, okListener);
 		dialogBuilder.create().show();
 	}
 }

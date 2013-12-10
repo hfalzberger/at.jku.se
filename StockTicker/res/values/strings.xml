@@ -26,6 +26,8 @@
     <string name="err_no_credentials">Username/Passwort eingeben!</string>
     <string name="err_wrong_credentials">Username/Passwort nicht korrekt!</string>
     
+    <string name="user_created">User angelegt</string>
+    
     <string name="chart_title">Aktien</string>
     <string name="chart_xlabel">Datum</string>
     <string name="chart_ylabel">€</string>

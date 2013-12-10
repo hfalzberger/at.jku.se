@@ -4,35 +4,34 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
 import at.jku.stockticker.pojo.Stock;
 
 public class OptionsService extends AbstractArrayService<Stock> {
 
-	private static final String URL = "http://10.0.2.2:1337/options";
-	private static final String TAG_ID = "id";
-	private static final String TAG_NAME = "name";
-	private static final String TAG_SYMBOL = "symbol";
+	protected static String URL = "http://10.0.2.2:1337/options";
+	protected static final String TAG_ID = "id";
+	protected static final String TAG_NAME = "name";
+	protected static final String TAG_SYMBOL = "symbol";
 
 	@Override
-	protected List<Stock> doInBackground(Object... object) {
+	public List<Stock> get(Object... object) throws Exception {
+		super.initializeReader(URL);
+		return readStocks();
+	}
+
+	public List<Stock> readStocks() throws IOException {
 		List<Stock> stocks = new ArrayList<Stock>();
 
-		try {
-			super.initializeReader(URL);
-			reader.beginArray();
-			while (reader.hasNext()) {
-				stocks.add(readStock());
-			}
-			reader.endArray();
-		} catch (Exception e) {
-			Log.e(this.getClass().getName(), e.getMessage());
+		reader.beginArray();
+		while (reader.hasNext()) {
+			stocks.add(readStock());
 		}
+		reader.endArray();
 
 		return stocks;
 	}
 
-	private Stock readStock() throws IOException {
+	protected Stock readStock() throws IOException {
 		Stock s = new Stock();
 
 		reader.beginObject();

@@ -3,6 +3,7 @@ package at.jku.stockticker.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import at.jku.stockticker.R;
 import at.jku.stockticker.SessionManager;
+import at.jku.stockticker.services.UserManagementService;
 
 public class LoginActivity extends Activity {
 	
@@ -50,15 +52,21 @@ public class LoginActivity extends Activity {
                 String password = passwordTxt.getText().toString();
                  
                 if(username.trim().length() > 0 && password.trim().length() > 0){
-                    if(username.equals("test") && password.equals("test")){
-                        session.createLoginSession(username, password);
-                         
-                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(i);
-                        finish();
-                    }else{
-                    	Toast.makeText(LoginActivity.this, R.string.err_wrong_credentials, Toast.LENGTH_LONG).show();
-                    }               
+                	try {
+						String sessionValue = new UserManagementService().signIn(username, password);
+						if(sessionValue != null && !sessionValue.isEmpty()) {
+	                        session.createLoginSession(username, password, sessionValue);
+	                         
+	                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+	                        startActivity(i);
+	                        finish();
+	                    }else{
+	                    	Toast.makeText(LoginActivity.this, R.string.err_wrong_credentials, Toast.LENGTH_LONG).show();
+	                    }        
+					} catch (Exception e) {
+						Log.e(LoginActivity.this.getClass().getName(), e.getMessage());
+						Toast.makeText(LoginActivity.this, e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+					}
                 }else{
                     Toast.makeText(LoginActivity.this, R.string.err_no_credentials, Toast.LENGTH_LONG).show();
                 }

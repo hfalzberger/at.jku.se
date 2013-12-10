@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import android.util.Log;
 import at.jku.stockticker.pojo.Price;
 import at.jku.stockticker.pojo.Stock;
 
@@ -22,22 +21,18 @@ public class PriceService extends AbstractArrayService<Price> {
 	 * @param Param2 - Date object start
 	 * @param Param3 - Date object end
 	 */
-	protected List<Price> doInBackground(Object... o) {
+	public List<Price> get(Object... o) throws Exception {
 		List<Price> prizes = new ArrayList<Price>();
 
-		try {
-			String url = URL;
-			url += "?id=" + ((Stock)o[0]).getId() + "&start=" + ((Date)o[1]).getTime() + "&end=" + ((Date)o[2]).getTime();
-			super.initializeReader(url);
-			
-			reader.beginArray();
-			while (reader.hasNext()) {
-				prizes.add(readStock());
-			}
-			reader.endArray();
-		} catch (Exception e) {
-			Log.e(this.getClass().getName(), e.getMessage());
+		String url = URL;
+		url += "?id=" + ((Stock)o[0]).getId() + "&start=" + ((Date)o[1]).getTime() + "&end=" + ((Date)o[2]).getTime();
+		super.initializeReader(url);
+		
+		reader.beginArray();
+		while (reader.hasNext()) {
+			prizes.add(readStock());
 		}
+		reader.endArray();
 
 		return prizes;
 	}

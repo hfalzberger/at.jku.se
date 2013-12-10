@@ -12,11 +12,10 @@ import java.util.Map;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.DatePickerDialog.OnDateSetListener;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -30,6 +29,7 @@ import at.jku.stockticker.R;
 import at.jku.stockticker.pojo.Price;
 import at.jku.stockticker.pojo.Stock;
 import at.jku.stockticker.services.OptionsService;
+import at.jku.stockticker.services.PreferencesService;
 import at.jku.stockticker.services.PriceService;
 
 public class MainActivity extends Activity {
@@ -138,11 +138,12 @@ public class MainActivity extends Activity {
 				else
 					selectedStocks.remove(availableStocks.get(which));
 			}
-		}));
+		}, null));
 		
 		this.savedStocksBtn.setOnClickListener(new StockSelectAlert(
 				availableStocks,
-				portfolio, this, new OnItemClickListener() {
+				portfolio, this, 
+				new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int which, long id) {
@@ -151,6 +152,16 @@ public class MainActivity extends Activity {
 					portfolio.add(availableStocks.get(which));
 				else
 					portfolio.remove(availableStocks.get(which));
+			}
+		}, new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				try {
+					Toast.makeText(MainActivity.this, new PreferencesService().set(portfolio), Toast.LENGTH_LONG).show();
+				} catch (Exception e) {
+					Log.e(MainActivity.this.getClass().getName(), e.getLocalizedMessage());
+				}		
 			}
 		}));
 		
@@ -169,45 +180,35 @@ public class MainActivity extends Activity {
 	}
 
 	private List<Stock> getSavedStocks() {
-		List<Stock> stocks = new ArrayList<Stock>();
-		stocks.add(new Stock("AT0000603709", "test1", "t1"));
-		stocks.add(new Stock("AT00000AMAG3", "test4", "t2"));
+		List<Stock> stocks = null;
+		try {
+			stocks = new PreferencesService().get();
+		} catch (Exception e) {
+			Log.e(MainActivity.class.getName(), e.getLocalizedMessage());
+		}
 		return stocks;
 	}
 
 	private List<Stock> getStocks() {		
 		List<Stock> stocks = null;
-		
 		try {
-			AsyncTask<Object, Void, List<Stock>> task = null;
-			task = new OptionsService().execute();
-			stocks = task.get();
+			stocks = new OptionsService().get();
 		} catch (Exception e) {
 			Log.e(MainActivity.class.getName(), e.getLocalizedMessage());
 		}
 		return stocks;
 	}
 	
-	
 	private Map<Stock, List<Price>> getStockPrizes() {
 		Map<Stock, List<Price>> result = new HashMap<Stock, List<Price>>();
-		
 		try {
-			AsyncTask<Object, Void, List<Price>> task = null;
+			PriceService priceService = new PriceService();
 			for(Stock st : this.selectedStocks) {
-				task = new PriceService().execute(st, this.fromDate, this.toDate);
-				result.put(st, task.get());
+				result.put(st, priceService.get(st, this.fromDate, this.toDate));
 			}
 		} catch (Exception e) {
 			Log.e(MainActivity.class.getName(), e.getLocalizedMessage());
 		}
 		return result;		
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		//getMenuInflater().inflate(R.menu.main, menu);
-		return false;
 	}
 }
