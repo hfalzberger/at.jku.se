@@ -46,7 +46,7 @@ public class UserManagementService {
 		HttpResponse res = task.get();
 		
 		if (res.getStatusLine().getStatusCode() == 200) {
-			return "myDummy";
+			return "200";
 		}
 		return Util.toString(res);
 	}

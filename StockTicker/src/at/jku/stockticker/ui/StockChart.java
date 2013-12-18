@@ -64,7 +64,7 @@ public class StockChart {
 					valMax = val[i];
 			}
 			
-			titles[j] = entry.getKey().getSymbol();
+			titles[j] = ""+entry.getKey().getName();
 			colors[j] = Color.rgb(100+(int)(Math.random()*155), 100+(int)(Math.random())*155, 100+(int)(Math.random()*155));
 			styles[j] = PointStyle.TRIANGLE;
 			values.add(val);

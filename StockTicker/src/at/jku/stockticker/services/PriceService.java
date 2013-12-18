@@ -25,7 +25,7 @@ public class PriceService extends AbstractService implements RetrieveDataService
 		List<Price> prizes = new ArrayList<Price>();
 
 		String url = URL;
-		url += "?id=" + ((Stock)o[0]).getId() + "&start=" + ((Date)o[1]).getTime() + "&end=" + ((Date)o[2]).getTime();
+		url += "/" + ((Stock)o[0]).getId() + "?start=" + ((Date)o[1]).getTime() + "&end=" + ((Date)o[2]).getTime();
 		super.initializeReader(url);
 		
 		reader.beginArray();

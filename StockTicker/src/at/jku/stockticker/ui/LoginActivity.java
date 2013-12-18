@@ -53,9 +53,9 @@ public class LoginActivity extends Activity {
                  
                 if(username.trim().length() > 0 && password.trim().length() > 0){
                 	try {
-						String sessionValue = new UserManagementService().signIn(username, password);
-						if(sessionValue != null && !sessionValue.isEmpty()) {
-	                        session.createLoginSession(username, password, sessionValue);
+						String ret = new UserManagementService().signIn(username, password);
+						if(ret != null && ret.equals("200")) {
+	                        session.createLoginSession(username, password);
 	                         
 	                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
 	                        startActivity(i);

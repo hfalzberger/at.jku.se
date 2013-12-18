@@ -172,9 +172,14 @@ public class MainActivity extends Activity {
 					Toast.makeText(MainActivity.this, R.string.err_no_stocks, Toast.LENGTH_LONG).show();
 					return;
 				}
-				StockChart chart = new StockChart(MainActivity.this.getStockPrizes());
-				Intent chartIntent = chart.execute(MainActivity.this);
-				startActivity(chartIntent);
+				Map<Stock, List<Price>> prices =  MainActivity.this.getStockPrizes();
+				if(prices.isEmpty())
+					Toast.makeText(MainActivity.this, "Keine Aktien gefunden", Toast.LENGTH_LONG).show();
+				else {
+					StockChart chart = new StockChart(prices);
+					Intent chartIntent = chart.execute(MainActivity.this);
+					startActivity(chartIntent);
+				}
 			}
 		});
 	}

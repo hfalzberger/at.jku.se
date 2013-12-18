@@ -20,7 +20,6 @@ public class SessionManager {
   
     public static final String KEY_NAME = "name";
     public static final String KEY_PASSWORD = "pwd";
-    public static final String KEY_SESSION= "session";
      
     public SessionManager(Context context){
         this._context = context;
@@ -28,12 +27,11 @@ public class SessionManager {
         editor = pref.edit();
     }
      
-    public void createLoginSession(String name, String password, String session){
+    public void createLoginSession(String name, String password){
         editor.putBoolean(IS_LOGIN, true);
          
         editor.putString(KEY_NAME, name);
         editor.putString(KEY_PASSWORD, password);
-        editor.putString(KEY_SESSION, session);
         
         editor.commit();
     }   
